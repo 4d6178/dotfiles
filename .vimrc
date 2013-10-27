@@ -17,7 +17,7 @@ Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'derekwyatt/vim-fswitch'
-Bundle 'flazz/vim-colorschemes'
+Bundle 'jonathanfilip/vim-lucius'
 Bundle 'tpope/vim-surround'
 Bundle 'davidhalter/jedi-vim'
 
@@ -52,7 +52,8 @@ set backup                      " backups are nice ...
 au BufWinLeave * silent! mkview  "make vim save view (state) (folds, cursor, etc)
 au BufWinEnter * silent! loadview "make vim load view (state) (folds, cursor, etc)
 
-color lucius
+colorscheme lucius
+
 set tabpagemax=15               " only show 15 tabs
 set showmode                    " display the current mode
 
@@ -143,18 +144,6 @@ nnoremap k gk
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
-""" Code folding options
-nmap <leader>f0 :set foldlevel=0<CR>
-nmap <leader>f1 :set foldlevel=1<CR>
-nmap <leader>f2 :set foldlevel=2<CR>
-nmap <leader>f3 :set foldlevel=3<CR>
-nmap <leader>f4 :set foldlevel=4<CR>
-nmap <leader>f5 :set foldlevel=5<CR>
-nmap <leader>f6 :set foldlevel=6<CR>
-nmap <leader>f7 :set foldlevel=7<CR>
-nmap <leader>f8 :set foldlevel=8<CR>
-nmap <leader>f9 :set foldlevel=9<CR>
-
 nmap <leader>y "+y
 nmap <leader>Y "+Y
 nmap <leader>yy "+yy
@@ -220,9 +209,9 @@ let g:clang_complete_copen=1
 let g:clang_hl_errors=1
 let g:clang_use_library=1
 let g:clang_periodic_quickfix=1
-let g:clang_complete-snippets=1
+let g:clang_complete_snippets=1
 let g:clang_conceal_snippets=1
-let g:clang_close-preview=1
+let g:clang_close_preview=1
 
 let g:clang_library_path=$CLANG_LIB
 
@@ -236,13 +225,13 @@ endif
 nmap <silent> <leader>Q :call g:ClangUpdateQuickFix()<cr>
 
 if has('gui_running')
- set guioptions-=T           " remove the toolbar
- set guioptions-=m
- set guioptions-=r
- set guioptions-=L
- set lines=40                " 40 lines of text instead of 24,
+     set guioptions-=T           " remove the toolbar
+     set guioptions-=m
+     set guioptions-=r
+     set guioptions-=L
+     set lines=40                " 40 lines of text instead of 24,
 else
- set term=builtin_ansi       " Make arrow and other keys work
+    set term=xterm-256color
 endif
 
 function! InitializeDirectories()
