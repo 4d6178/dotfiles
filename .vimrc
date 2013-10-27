@@ -17,7 +17,9 @@ Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'derekwyatt/vim-fswitch'
-Bundle 'ervandew/supertab'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'tpope/vim-surround'
+Bundle 'davidhalter/jedi-vim'
 
 Bundle 'L9'
 Bundle 'FuzzyFinder'
@@ -28,9 +30,6 @@ filetype plugin indent on
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
 set background=dark
-if !has('win32') && !has('win64')
- set term=$TERM
-endif
 syntax on
 set mouse=a
 scriptencoding utf-8
@@ -101,7 +100,11 @@ set foldenable                  " auto fold code
 set gdefault                    " the /g flag on :s substitutions by default
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
-set guifont=consolas:h10
+if !has('win32') && !has('win64')
+    set guifont=Ubuntu\ Mono\ 11
+else
+    set guifont=consolas:h10
+endif
 
  " Formatting
 set nowrap                      " wrap long lines
@@ -121,21 +124,15 @@ let mapleader = ','
 nnoremap ; :
 
 " Easier moving in tabs and windows
-map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_
-map <C-L> <C-W>l<C-W>_
-map <C-H> <C-W>h<C-W>_
-map <C-K> <C-W>k<C-W>_
-     
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+map <C-H> <C-W>h
+map <C-K> <C-W>k
+
 " Wrapped lines goes down/up to next row, rather than next line in file.
 nnoremap j gj
 nnoremap k gk
-
-cmap W w
-cmap WQ wq
-cmap wQ wq
-cmap Q q
-cmap Tabe tabe
 
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
@@ -170,20 +167,11 @@ cmap cd. lcd %:p:h
 vnoremap < <gv
 vnoremap > >gv 
 
-" Supertab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "context"
-
 " Misc
 :map <C-F10> <Esc>:vsp<CR>:VTree<CR>
 
 noremap <leader><F5> :CheckSyntax<cr>
 let g:checksyntax_auto = 1
-
- "comment out line(s) in visual mode -RB: If you do this, you can't
- "switch sides of the comment block in visual mode.
- "vmap  o  :call NERDComment(1, 'toggle')<CR>
-"let g:NERDShutUp=1
 
 let b:match_ignorecase = 1
 
@@ -198,15 +186,6 @@ inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
 inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
-
-let g:SuperTabCrMapping = 0
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menu,preview,longest
-
-" SnipMate
-" Shortcut for reloading snippets, useful when developing
-nnoremap ,smr <esc>:exec ReloadAllSnippets()<cr>
 
 " NerdTree
 map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
@@ -228,31 +207,26 @@ nmap <leader>fb :FufBuffer<CR>
 nmap <leader>fl :FufLine<CR>
 nmap <leader>fr :FufRenewCache<CR>
 
-" Session List
-set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-nmap <leader>sl :SessionList<CR>
-nmap <leader>ss :SessionSave<CR>
-
-" Pydiction
-let g:pydiction_location = $HOME . '/.vim/bundle/Pydiction/complete-dict'
-
 " clang_complete
 let g:clang_auto_select=1
 let g:clang_complete_copen=1
 let g:clang_hl_errors=1
 let g:clang_use_library=0
 let g:clang_library_path=$CLANG_BIN
-let g:clang_exec=$CLANG_BIN . 'clang.exe'
-let g:clang_user_options='-IC:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include'
+
+if has('win32') || has('win64')
+    let g:clang_exec=$CLANG_BIN . 'clang.exe'
+    let g:clang_user_options='-IC:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include'
+endif
 
 " check syntax
 nmap <silent> <leader>Q :call g:ClangUpdateQuickFix()<cr>
 
- " GUI Settings {
-     " GVIM- (here instead of .gvimrc)
 if has('gui_running')
  set guioptions-=T           " remove the toolbar
  set guioptions-=m
+ set guioptions-=r
+ set guioptions-=L
  set lines=40                " 40 lines of text instead of 24,
 else
  set term=builtin_ansi       " Make arrow and other keys work
