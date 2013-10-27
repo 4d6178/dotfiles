@@ -2,7 +2,7 @@
 	name = Max Sherbakov
 	email = 0x4d6178@gmail.com
 [core]
-    editor = gvim
+    editor = vim
 [rerere]
     enabled = 1
 [alias]
