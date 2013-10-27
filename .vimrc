@@ -40,6 +40,7 @@ set virtualedit=onemore         " allow for cursor beyond last character
 set history=1000                " Store a ton of history (default is 20)
 set nospell                       " spell checking on
 
+
 set noerrorbells
 set novisualbell
 set t_vb=
@@ -119,9 +120,14 @@ set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+autocmd FileType c,cpp set completefunc=ClangComplete
 
 let mapleader = ','
 nnoremap ; :
+
+set concealcursor=inv
+set conceallevel=2
+set colorcolumn=80
 
 " Easier moving in tabs and windows
 map <C-J> <C-W>j
@@ -208,15 +214,22 @@ nmap <leader>fl :FufLine<CR>
 nmap <leader>fr :FufRenewCache<CR>
 
 " clang_complete
+let g_clang_complete_auto=1
 let g:clang_auto_select=1
 let g:clang_complete_copen=1
 let g:clang_hl_errors=1
-let g:clang_use_library=0
-let g:clang_library_path=$CLANG_BIN
+let g:clang_use_library=1
+let g:clang_periodic_quickfix=1
+let g:clang_complete-snippets=1
+let g:clang_conceal_snippets=1
+let g:clang_close-preview=1
+
+let g:clang_library_path=$CLANG_LIB
 
 if has('win32') || has('win64')
-    let g:clang_exec=$CLANG_BIN . 'clang.exe'
     let g:clang_user_options='-IC:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include'
+else
+    let g:clang_user_options='-I/usr/include/c++/4.8'
 endif
 
 " check syntax
