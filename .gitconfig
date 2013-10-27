@@ -1,0 +1,19 @@
+[user]
+	name = Max Sherbakov
+	email = 0x4d6178@gmail.com
+[core]
+    editor = gvim
+[rerere]
+    enabled = 1
+[alias]
+    st = status
+    ci = commit
+    ca = commit --amend
+    cnv = commit --no-verify
+    canv = commit --amend --no-verify
+    hist = log --oneline --graph --decorate
+    co = checkout
+    br = branch
+    au = add -u
+[color]
+    ui = always
