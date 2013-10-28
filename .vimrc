@@ -20,6 +20,7 @@ Bundle 'derekwyatt/vim-fswitch'
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'tpope/vim-surround'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'Raimondi/delimitMate'
 
 Bundle 'L9'
 Bundle 'FuzzyFinder'
@@ -39,7 +40,7 @@ set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatib
 set virtualedit=onemore         " allow for cursor beyond last character
 set history=1000                " Store a ton of history (default is 20)
 set nospell                       " spell checking on
-
+set clipboard=unnamedplus
 
 set noerrorbells
 set novisualbell
@@ -47,7 +48,8 @@ set t_vb=
 
 nmap <silent> <leader>s :set spell
 
-set backup                      " backups are nice ...
+set noswapfile
+set backup
 
 au BufWinLeave * silent! mkview  "make vim save view (state) (folds, cursor, etc)
 au BufWinEnter * silent! loadview "make vim load view (state) (folds, cursor, etc)
@@ -137,6 +139,9 @@ map <C-L> <C-W>l
 map <C-H> <C-W>h
 map <C-K> <C-W>k
 
+nnoremap <leader>( :tabprevious<cr>
+nnoremap <leader>) :tabnext<cr>
+
 " Wrapped lines goes down/up to next row, rather than next line in file.
 nnoremap j gj
 nnoremap k gk
@@ -149,6 +154,9 @@ nmap <leader>Y "+Y
 nmap <leader>yy "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
+
+" Split line (sister to [J]oin lines)
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 
 "clearing highlighted search
 nmap <silent> <leader>h :nohlsearch<CR>
