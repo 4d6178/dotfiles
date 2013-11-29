@@ -15,5 +15,6 @@
     co = checkout
     br = branch
     au = add -u
+    last = log -1
 [color]
     ui = always
