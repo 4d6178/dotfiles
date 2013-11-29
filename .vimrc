@@ -241,7 +241,7 @@ if has('gui_running')
      set guioptions-=L
      set lines=40                " 40 lines of text instead of 24,
 else
-    set term=xterm-256color
+    set term=screen-256color
 endif
 
 function! InitializeDirectories()
