@@ -20,6 +20,7 @@ Bundle 'derekwyatt/vim-fswitch'
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'tpope/vim-surround'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'nvie/vim-flake8'
 Bundle 'Raimondi/delimitMate'
 
 Bundle 'L9'
@@ -124,6 +125,7 @@ set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 autocmd FileType c,cpp set completefunc=ClangComplete
+autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: iso-8859-15 -*-\<nl>\"|$
 
 let mapleader = ','
 nnoremap ; :
