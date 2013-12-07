@@ -214,9 +214,9 @@ nmap <leader>fl :FufLine<CR>
 nmap <leader>fr :FufRenewCache<CR>
 
 " clang_complete
-let g_clang_complete_auto=1
+let g_clang_complete_auto=0
 let g:clang_auto_select=1
-let g:clang_complete_copen=1
+let g:clang_complete_copen=0
 let g:clang_hl_errors=1
 let g:clang_use_library=1
 let g:clang_periodic_quickfix=1
@@ -229,7 +229,7 @@ let g:clang_library_path=$CLANG_LIB
 if has('win32') || has('win64')
     let g:clang_user_options='-IC:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include'
 else
-    let g:clang_user_options='-I/usr/include/c++/4.8'
+    let g:clang_user_options='-I/usr/include/c++/4.8 --std=c++11'
 endif
 
 " check syntax
