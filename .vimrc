@@ -27,6 +27,13 @@ Bundle 'TeX-PDF'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 
+" snipMate
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+
+Bundle "honza/vim-snippets"
+
 filetype plugin indent on
 
 " auto reload vimrc when editing it
@@ -44,9 +51,13 @@ set history=1000                " Store a ton of history (default is 20)
 set nospell                       " spell checking on
 set clipboard=unnamedplus
 
+" turn off any kind of annoying error notifications
 set noerrorbells
 set novisualbell
 set t_vb=
+
+" make tilde behave in a vim-way
+set tildeop
 
 nmap <silent> <leader>s :set spell
 
@@ -113,7 +124,7 @@ else
 endif
 
  " Formatting
-set nowrap                      " wrap long lines
+set nowrap                      " don't wrap long lines
 set autoindent                  " indent at the same level of the previous line
 set shiftwidth=4                " use indents of 4 spaces
 set expandtab                   " tabs are spaces, not tabs
@@ -126,9 +137,13 @@ set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 autocmd FileType c,cpp set completefunc=ClangComplete
+
+" Automatically insert shebang and encoding to python files
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: iso-8859-15 -*-\<nl>\"|$
 
 let mapleader = ','
+
+" To avoid common typos
 nnoremap ; :
 
 set concealcursor=inv
@@ -158,6 +173,12 @@ nmap <leader>yy "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
 
+" Arrows are evil.
+map <up> <nop>
+map <down> <nop>
+map <right> <nop>
+map <left> <nop>
+
 " Split line (sister to [J]oin lines)
 nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 
@@ -175,9 +196,6 @@ vnoremap > >gv
 
 " Misc
 :map <C-F10> <Esc>:vsp<CR>:VTree<CR>
-
-noremap <leader><F5> :CheckSyntax<cr>
-let g:checksyntax_auto = 1
 
 let b:match_ignorecase = 1
 
