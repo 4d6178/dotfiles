@@ -21,8 +21,10 @@ Bundle 'jonathanfilip/vim-lucius'
 Bundle 'tpope/vim-surround'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'nvie/vim-flake8'
+Bundle 'christoomey/vim-tmux-navigator'
 
 Bundle 'TeX-PDF'
+Bundle 'DoxygenToolkit.vim'
 
 Bundle 'L9'
 Bundle 'FuzzyFinder'
