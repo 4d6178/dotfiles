@@ -13,15 +13,14 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
-Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'tpope/vim-surround'
-Bundle 'davidhalter/jedi-vim'
 Bundle 'nvie/vim-flake8'
 Bundle 'christoomey/vim-tmux-navigator'
+Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'TeX-PDF'
 Bundle 'DoxygenToolkit.vim'
@@ -138,7 +137,6 @@ set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
 " Remove trailing whitespaces and ^M chars
 autocmd FileType c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
-autocmd FileType c,cpp set completefunc=ClangComplete
 
 " Automatically insert shebang and encoding to python files
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: iso-8859-15 -*-\<nl>\"|$
@@ -233,25 +231,6 @@ nmap <leader>fb :FufBuffer<CR>
 nmap <leader>fl :FufLine<CR>
 nmap <leader>fr :FufRenewCache<CR>
 
-" clang_complete
-let g_clang_complete_auto=0
-let g:clang_auto_select=1
-let g:clang_complete_copen=0
-let g:clang_hl_errors=1
-let g:clang_use_library=1
-let g:clang_periodic_quickfix=1
-let g:clang_complete_snippets=1
-let g:clang_conceal_snippets=1
-let g:clang_close_preview=1
-
-let g:clang_library_path=$CLANG_LIB
-
-if has('win32') || has('win64')
-    let g:clang_user_options='-IC:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include'
-else
-    let g:clang_user_options='-I/usr/include/c++/4.8 --std=c++11'
-endif
-
 " check syntax
 nmap <silent> <leader>Q :call g:ClangUpdateQuickFix()<cr>
 
@@ -322,31 +301,4 @@ nmap <silent> <Leader>of :FSHere<cr>
 nmap <silent> <f5> :FSHere<cr>
 imap <silent> <f5> <c-o>:FSHere<cr>
 
-" in current window
-nmap <silent> <Leader>oo :FSHere<cr>
-" in a new tab
-nmap <silent> <Leader>ot :call FSwitch('%', 'tabedit')<cr>
-
-" switch to the file and load it into the window on the right
-nmap <silent> <Leader>ol :FSRight<cr>
-
-" switch to the file and load it into a new window split on the right
-nmap <silent> <Leader>oL :FSSplitRight<cr>
-
-" switch to the file and load it into the window on the left
-nmap <silent> <Leader>oh :FSLeft<cr>
-
-" switch to the file and load it into a new window split on the left
-nmap <silent> <Leader>oH :FSSplitLeft<cr>
-
-" switch to the file and load it into the window above
-nmap <silent> <Leader>ok :FSAbove<cr>
-
-" switch to the file and load it into a new window split above
-nmap <silent> <Leader>oK :FSSplitAbove<cr>
-
-" switch to the file and load it into the window below
-nmap <silent> <Leader>oj :FSBelow<cr>
-
-" switch to the file and load it into a new window split below
-nmap <silent> <Leader>oJ :FSSplitBelow<cr>
+let g:snips_trigger_key='<C-\>'
