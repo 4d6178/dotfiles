@@ -16,5 +16,8 @@
     br = branch
     au = add -u
     last = log -1
+    ds = diff --staged
+[push]
+    default = current
 [color]
     ui = always
