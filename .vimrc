@@ -1,41 +1,35 @@
 " Basic settings
 set nocompatible
 set background=dark
-     if has('win32') || has('win64')
-       set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-     endif
+if has('win32') || has('win64')
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
 
 cd ~
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'derekwyatt/vim-fswitch'
-Bundle 'jonathanfilip/vim-lucius'
-Bundle 'tpope/vim-surround'
-Bundle 'nvie/vim-flake8'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'jonathanfilip/vim-lucius'
+Plugin 'tpope/vim-surround'
+Plugin 'nvie/vim-flake8'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'rhysd/vim-clang-format'
 
-Bundle 'TeX-PDF'
-Bundle 'DoxygenToolkit.vim'
+Plugin 'TeX-PDF'
+Plugin 'DoxygenToolkit.vim'
 
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-
-" snipMate
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-
-Bundle "honza/vim-snippets"
+Plugin 'L9'
+Plugin 'FuzzyFinder'
 
 filetype plugin indent on
+set hidden
 
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -51,6 +45,7 @@ set virtualedit=onemore         " allow for cursor beyond last character
 set history=1000                " Store a ton of history (default is 20)
 set nospell                       " spell checking on
 set clipboard=unnamedplus
+set colorcolumn=80
 
 " turn off any kind of annoying error notifications
 set noerrorbells
@@ -78,22 +73,21 @@ hi cursorline guibg=#333333     " highlight bg color of current line
 hi CursorColumn guibg=#333333   " highlight cursor
 
 if has('cmdline_info')
- set ruler                   " show the ruler
- set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
- set showcmd                 " show partial commands in status line and
-                             " selected characters/lines in visual mode
+    set ruler                   " show the ruler
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+    set showcmd                 " show partial commands in status line and
 endif
 
 if has('statusline')
- set laststatus=2
+    set laststatus=2
 
- " Broken down into easily includeable segments
- set statusline=%<%f\    " Filename
- set statusline+=%w%h%m%r " Options
- set statusline+=\ [%{&ff}/%Y]            " filetype
- set statusline+=\ [%{getcwd()}]          " current dir
- set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
- set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+    " Broken down into easily includeable segments
+    set statusline=%<%f\    " Filename
+    set statusline+=%w%h%m%r " Options
+    set statusline+=\ [%{&ff}/%Y]            " filetype
+    set statusline+=\ [%{getcwd()}]          " current dir
+    set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
 set backspace=indent,eol,start  " backspace for dummys
@@ -117,7 +111,7 @@ set scrolloff=3                 " minimum lines to keep above and below cursor
 set foldenable                  " auto fold code
 set gdefault                    " the /g flag on :s substitutions by default
 set list
-set listchars=tab:>.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
 if !has('win32') && !has('win64')
     set guifont=Ubuntu\ Mono\ 11
 else
@@ -145,10 +139,6 @@ let mapleader = ','
 
 " To avoid common typos
 nnoremap ; :
-
-set concealcursor=inv
-set conceallevel=2
-set colorcolumn=80
 
 " Easier moving in tabs and windows
 map <C-J> <C-W>j
@@ -231,9 +221,6 @@ nmap <leader>fb :FufBuffer<CR>
 nmap <leader>fl :FufLine<CR>
 nmap <leader>fr :FufRenewCache<CR>
 
-" check syntax
-nmap <silent> <leader>Q :call g:ClangUpdateQuickFix()<cr>
-
 if has('gui_running')
      set guioptions-=T           " remove the toolbar
      set guioptions-=m
@@ -286,13 +273,13 @@ function! NERDTreeInitAsNeeded()
 " commands to setup settings for different file types
 augroup fswitch
     autocmd!
-    autocmd! BufEnter,BufRead *.h let b:fswitchdst = 'c,cpp'
+    autocmd! BufEnter,BufRead *.h let b:fswitchdst = 'c,cpp,cc'
                               \ | let b:fswitchlocs = '.'
     autocmd! BufEnter,BufRead *.c let b:fswitchdst = 'h'
                               \ | let b:fswitchlocs = '.'
-    autocmd! BufEnter,BufRead *.hpp let b:fswitchdst = 'cpp'
+    autocmd! BufEnter,BufRead *.hpp let b:fswitchdst = 'cpp,cc'
                               \ | let b:fswitchlocs = '.'
-    autocmd! BufEnter,BufRead *.cpp let b:fswitchdst = 'hpp,h'
+    autocmd! BufEnter,BufRead *.cpp let b:fswitchdst = 'hh,hpp,h'
                                 \ | let b:fswitchlocs = '.'
 augroup end
 
@@ -301,4 +288,18 @@ nmap <silent> <Leader>of :FSHere<cr>
 nmap <silent> <f5> :FSHere<cr>
 imap <silent> <f5> <c-o>:FSHere<cr>
 
-let g:snips_trigger_key='<C-\>'
+" make mintty change cursor shape on mode change
+" TODO: is there a way to know if we are working in mintty?
+if has('win32') || has('win64')
+    let &t_ti.="\e[1 q"
+    let &t_SI.="\e[5 q"
+    let &t_EI.="\e[1 q"
+    let &t_te.="\e[0 q"
+endif
+
+nnoremap <silent><leader>jd :YcmCompleter GoToDeclaration<cr>
+nnoremap <silent><leader>ji :YcmCompleter GoToDefinition<cr>
+
+nnoremap <silent><leader>fm :ClangFormat<cr>
+
+let ycm_confirm_extra_conf = 0
